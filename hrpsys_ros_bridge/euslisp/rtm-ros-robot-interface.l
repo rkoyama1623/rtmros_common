@@ -1697,19 +1697,15 @@
   :optional-args (list :name 'name))
 (defmethod rtm-ros-robot-interface
   (:start-reference-force-updater
-   (limb &rest args)
+   (limb)
    "Start reference force updater mode.
     limb should be limb symbol name such as :rarm, :larm, or :arms."
-   (if args
-       (progn
-         (send* self :set-reference-force-updater-param limb args)
-         (send self :raw-start-reference-force-updater limb))
-     (send self :raw-start-reference-force-updater limb)))
+   (send self :raw-start-reference-force-updater limb))
   (:raw-start-reference-force-updater
    (limb)
    (send self :force-sensor-method
          limb
-         #'(lambda (name &rest _args)
+         #'(lambda (name)
              (send self :referenceforceupdaterservice_startReferenceforceupdater :name (string-downcase name)))
          :raw-start-reference-force-updater))
   (:stop-reference-force-updater
@@ -1721,7 +1717,7 @@
    (limb)
    (send self :force-sensor-method
          limb
-         #'(lambda (name &rest _args)
+         #'(lambda (name)
              (send self :referenceforceupdaterservice_stopReferenceforceupdater :name (string-downcase name)))
          :raw-stop-reference-force-updater))
   (:set-reference-force-updater-param
@@ -1741,7 +1737,7 @@
     limb should be limb symbol name such as :rarm, :larm, :arms."
    (send self :force-sensor-method
          limb
-         #'(lambda (name &rest _args)
+         #'(lambda (name)
              (send self :raw-get-reference-force-updater-param (string-downcase name)))
          :get-reference-force-updater-param))
   )

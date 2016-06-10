@@ -1700,26 +1700,20 @@
    (limb)
    "Start reference force updater mode.
     limb should be limb symbol name such as :rarm, :larm, or :arms."
-   (send self :raw-start-reference-force-updater limb))
-  (:raw-start-reference-force-updater
-   (limb)
    (send self :force-sensor-method
          limb
          #'(lambda (name)
              (send self :referenceforceupdaterservice_startReferenceforceupdater :name (string-downcase name)))
-         :raw-start-reference-force-updater))
+         :start-reference-force-updater))
   (:stop-reference-force-updater
    (limb)
    "Stop reference force updater mode.
     limb should be limb symbol name such as :rarm, :larm, or :arms."
-   (send self :raw-stop-reference-force-updater limb))
-  (:raw-stop-reference-force-updater
-   (limb)
    (send self :force-sensor-method
          limb
          #'(lambda (name)
              (send self :referenceforceupdaterservice_stopReferenceforceupdater :name (string-downcase name)))
-         :raw-stop-reference-force-updater))
+         :stop-reference-force-updater))
   (:set-reference-force-updater-param
    (limb &rest args)
    "Set reference force updater parameter like (send *ri* :set-reference-force-updater-param :rarm :p-gain 0.02).
